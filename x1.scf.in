@@ -1,0 +1,91 @@
+&CONTROL
+  calculation = 'scf',
+  pseudo_dir = '/projects/academic/alexeyak/Software/PSEUDO/SSSP/SSSP_acc_PBE/',
+  outdir = './',
+  prefix = 'x1',
+  tprnfor = .true.
+  disk_io = 'low',
+  wf_collect = .true.,
+/
+
+&SYSTEM
+  ibrav = 0,
+  celldm(1) = 1.89 ,
+  nat = 24,
+  ntyp = 3,
+  nspin = 2,
+  nbnd = 42,
+  ecutwfc = 30,
+  tot_charge = 0.0,
+  starting_magnetization(1) = 0.01
+  occupations = 'from_input',
+  smearing = 'gaussian',
+  degauss = 0.05,
+  nosym = .true.,
+/
+
+&ELECTRONS
+  electron_maxstep = 5,
+  conv_thr = 1.D-5,
+  mixing_beta = 0.45,
+/
+
+&IONS
+  ion_dynamics = 'verlet',
+  ion_temperature = 'andersen',
+  tempw = 300.00 ,
+  nraise = 1,
+/
+
+
+ATOMIC_SPECIES
+ C  12.01  C_pbe_v1.2.uspp.F.UPF
+ H  1.008  H.pbe-rrkjus_psl.0.1.UPF
+ N  14.01  N.pbe.theos.UPF
+
+K_POINTS gamma
+                               
+CELL_PARAMETERS
+    12.0000000    0.0000000    0.0000000
+     0.0000000   12.0000000    0.0000000
+     0.0000000    0.0000000   12.0000000
+ 
+ATOMIC_POSITIONS (alat)
+C          0.00000        0.00000        0.00000
+N          1.43240        0.00000        0.00000
+N          2.14245        0.00000        1.03700
+C          2.26614       -1.11085        1.93330
+C          2.33664       -0.79935        3.29936
+C          2.57306       -1.80365        4.23438
+C          2.78845       -3.11872        3.81179
+C          2.77155       -3.42018        2.44628
+C          2.50667       -2.42718        1.50609
+H          2.50005       -2.66588        0.44257
+H          2.96086       -4.44065        2.10643
+H          2.99070       -3.90269        4.54322
+H          2.61048       -1.55342        5.29667
+H          2.19841        0.23809        3.60847
+C         -0.77473        0.85934        0.79603
+C         -2.15567        0.90516        0.61976
+C         -2.77773        0.09149       -0.33264
+C         -2.00306       -0.74701       -1.13979
+C         -0.61875       -0.77379       -0.99321
+H         -0.29460        1.49679        1.53833
+H         -2.75061        1.58021        1.23848
+H         -3.86081        0.12648       -0.45989
+H         -2.47662       -1.36872       -1.90247
+H          0.00489       -1.39457       -1.63836
+
+OCCUPATIONS
+1 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1
+1 1 1 0 1 0 0 0 0 0
+0 0
+
+1 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1
+1 1 1 1 0 0 0 0 0 0
+0 0
+
