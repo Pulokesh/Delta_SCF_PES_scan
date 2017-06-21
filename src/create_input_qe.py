@@ -188,21 +188,21 @@ def write_qe_input(ex_st, cord, params,occ,occ_alp,occ_bet,restart_flag):
     #################################
     #  At this point ex_st = 0 for spin-unrestricted calculation with 
     # QE default gaussian smearing calculation - no OCCUPATIONS card required for ex_st = 0
-    if ex_st >0:
+    ##if ex_st >0:
     ################################
-        # Write occupation
+    # Write occupation
+    g.write(""+'\n')
+    g.write("OCCUPATIONS"+'\n')
+
+    # Spin-restricted single excitations
+    if params["nspin"] <= 1:
+        g.write(print_occupations(occ))
         g.write(""+'\n')
-        g.write("OCCUPATIONS"+'\n')
 
-        # Spin-restricted single excitations
-        if params["nspin"] <= 1:
-            g.write(print_occupations(occ))
-            g.write(""+'\n')
-
-        # Spin-unrestricted single excitations
-        if params["nspin"] >1:
-            g.write(print_occupations(occ_alp))
-            g.write(""+'\n')
-            g.write(print_occupations(occ_bet))
+    # Spin-unrestricted single excitations
+    if params["nspin"] >1:
+        g.write(print_occupations(occ_alp))
+        g.write(""+'\n')
+        g.write(print_occupations(occ_bet))
         
     g.close()

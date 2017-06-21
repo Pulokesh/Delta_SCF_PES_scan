@@ -17,10 +17,7 @@
   nbnd = 42,
   ecutwfc = 30,
   tot_charge = 0.0,
-  starting_magnetization(1) = 0.01
   occupations = 'from_input',
-  smearing = 'gaussian',
-  degauss = 0.05,
   nosym = .true.,
 /
 

@@ -2,7 +2,7 @@
   calculation = 'scf',
   pseudo_dir = '/projects/academic/alexeyak/Software/PSEUDO/SSSP/SSSP_acc_PBE/',
   outdir = './',
-  prefix = 'x0',
+  prefix = 'x1',
   tprnfor = .true.
   disk_io = 'low',
   wf_collect = .true.,
@@ -17,15 +17,12 @@
   nbnd = 42,
   ecutwfc = 30,
   tot_charge = 0.0,
-  starting_magnetization(1) = 0.01
-  occupations = 'smearing',
-  smearing = 'gaussian',
-  degauss = 0.05,
+  occupations = 'from_input',
   nosym = .true.,
 /
 
 &ELECTRONS
-  electron_maxstep = 100,
+  electron_maxstep = 5,
   conv_thr = 1.D-5,
   mixing_beta = 0.45,
 /
@@ -76,4 +73,16 @@ H         -3.86081        0.12648       -0.45989
 H         -2.47662       -1.36872       -1.90247
 H          0.00489       -1.39457       -1.63836
 
+OCCUPATIONS
+1 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1
+1 1 1 0 1 0 0 0 0 0
+0 0
+
+1 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1
+1 1 1 1 0 0 0 0 0 0
+0 0
 
