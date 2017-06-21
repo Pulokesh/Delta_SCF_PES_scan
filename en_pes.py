@@ -3,7 +3,7 @@ import sys
 import os
 
 
-N = 185 # file numbers, grid number
+N = 181 # file numbers, grid number
 fname = "pes_en/full_re_Ham"
 fout = open("pes.out","w")
 for i in xrange(N):
