@@ -2,7 +2,7 @@
   calculation = 'scf',
   pseudo_dir = '/projects/academic/alexeyak/Software/PSEUDO/SSSP/SSSP_acc_PBE/',
   outdir = './',
-  prefix = 'x1',
+  prefix = 'x0',
   tprnfor = .true.
   disk_io = 'low',
   wf_collect = .true.,
@@ -22,7 +22,7 @@
 /
 
 &ELECTRONS
-  electron_maxstep = 5,
+  electron_maxstep = 100,
   conv_thr = 1.D-5,
   mixing_beta = 0.45,
 /
