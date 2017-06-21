@@ -7,7 +7,7 @@ N = 185 # file numbers, grid number
 fname = "pes_en/full_re_Ham"
 fout = open("pes.out","w")
 for i in xrange(N):
-    fout.write(" %i "%(i+0))
+    fout.write(" %i "%(i+75))
     f=open(fname+"_%i"%i,"r")
     A=f.readlines()
     f.close()
