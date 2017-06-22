@@ -21,14 +21,22 @@ elif sys.platform=="linux" or sys.platform=="linux2":
 from libra_py import *
 
 
-def fermi_pop(e,nel,spn,kT,el_st):  # <--- Now population scheme for all the MOs 
+#def fermi_pop(e,nel,spn,kT,frmi_indx):  # 0 for [0], 1 for [-1,0,1]<--- Now population scheme for all the MOs
+def fermi_pop(e,nel,params):  # 0 for [0], 1 for [-1,0,1]<--- Now population scheme for all the MOs
     ##
     #
+    spn = params["nspin"]
+    kT = params["electronic_smearing"]
+    frmi_indx = params["smear_scheme"]  # 0 for [0], 1 for [-1,0,1]
     etol = 0.0000000001
     pop_opt,pop_tot,pop_av = 1,[],[]
     ##if el_st > 1:  # For S0
     #if el_st > 0:  # For S0 and S1 the regular Fermi scheme is used
-    el_scheme = [0] # or =[-1,0,1] for other scheme
+    if frmi_indx==0:
+        el_scheme = [0]
+    elif frmi_indx==1:
+        el_scheme = [-1,0,1]
+    
     ##if el_st ==1:  # For S1
     ##    el_scheme = [-1,0,1]
     
@@ -55,13 +63,10 @@ def fermi_pop(e,nel,spn,kT,el_st):  # <--- Now population scheme for all the MOs
     #   For S1
 
     for ic in xrange(N):
-    ##    if el_st ==1: # For S1
-    ##        pop_av[ic] = pop_tot[0][ic]+pop_tot[2][ic] - pop_tot[1][ic]
-    # For S0
-    #for ic in xrange(N):
-    ##    else:  # For S0
-    ##        pop_av[ic] = pop_tot[0][ic]
-        pop_av[ic] = pop_tot[0][ic] # or something else pop_av[ic] = pop_tot[0][ic]+pop_tot[2][ic] - pop_tot[1][ic]
+        if frmi_indx ==0: # For S0
+            pop_av[ic] = pop_tot[0][ic] # or something else pop_av[ic] = pop_tot[0][ic]+pop_tot[2][ic] - pop_tot[1][ic]
+        elif frmi_indx ==1: # For S1
+            pop_av[ic] = pop_tot[0][ic]+pop_tot[2][ic] - pop_tot[1][ic]
 
     return pop_av
 

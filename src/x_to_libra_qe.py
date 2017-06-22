@@ -64,12 +64,12 @@ def qe_to_libra(params, cord, suff):
                 if params["nspin"] == 2: # Spin-polar
                     en_alp = qe_extract_eigenvalues("x%i.save/K00001/eigenval1.xml"%ex_st,nel)
                     en_bet = qe_extract_eigenvalues("x%i.save/K00001/eigenval2.xml"%ex_st,nel)
-                    occ_alp = fermi_pop(en_alp,nel,params["nspin"],params["electronic_smearing"],ex_st) # 1 for alpha
-                    occ_bet = fermi_pop(en_bet,nel,params["nspin"],params["electronic_smearing"],ex_st) # -1 for beta spin
+                    occ_alp = fermi_pop(en_alp,nel,params) # 1 for alpha
+                    occ_bet = fermi_pop(en_bet,nel,params) # -1 for beta spin
 
                 if params["nspin"] == 1: # non-Spin-polar
                     en_alp = qe_extract_eigenvalues("x%i.save/K00001/eigenval.xml"%ex_st,nel)
-                    occ = fermi_pop(en_alp,nel,params["nspin"],params["electronic_smearing"],ex_st)
+                    occ = fermi_pop(en_alp,nel,params)
         E2.set(ex_st, ex_st, tot_ene)
     #---------------------------------------------------------------
     #               Print total energies                           #
