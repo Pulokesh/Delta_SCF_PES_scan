@@ -21,16 +21,21 @@ elif sys.platform=="linux" or sys.platform=="linux2":
 from libra_py import *
 
 
-def fermi_pop(e,nel,spn,kT):  # <--- Now population scheme for all the MOs 
+def fermi_pop(e,nel,spn,kT,el_st):  # <--- Now population scheme for all the MOs 
     ##
     #
     etol = 0.0000000001
     pop_opt,pop_tot,pop_av = 1,[],[]
+    ##if el_st > 1:  # For S0
+    #if el_st > 0:  # For S0 and S1 the regular Fermi scheme is used
+    el_scheme = [0] # or =[-1,0,1] for other scheme
+    ##if el_st ==1:  # For S1
+    ##    el_scheme = [-1,0,1]
     
     N = len(e)  # number of active space orbitals - at this point using full orbital space.
     for ib in xrange(N):
         pop_av.append(0.0)
-    for ia in [-1,0,1]: # 0 for N-1, 1 for N and 2 for N+1 electrons
+    for ia in el_scheme: #[-1,0,1]: # 0 for N-1, 1 for N and 2 for N+1 electrons
         if spn ==1:
             Nel=nel + ia #nel/2 + nel%2
             degen = 2
@@ -47,8 +52,17 @@ def fermi_pop(e,nel,spn,kT):  # <--- Now population scheme for all the MOs
         bnds = order_bands(a)
         pop_fermi = populate_bands(Nel, degen, kT, etol, pop_opt, bnds)
         pop_tot.append([item[1] for item in pop_fermi]) #  pop_fermi[:10][1]
+    #   For S1
+
     for ic in xrange(N):
-        pop_av[ic] = pop_tot[0][ic]+pop_tot[2][ic] - pop_tot[1][ic]
+    ##    if el_st ==1: # For S1
+    ##        pop_av[ic] = pop_tot[0][ic]+pop_tot[2][ic] - pop_tot[1][ic]
+    # For S0
+    #for ic in xrange(N):
+    ##    else:  # For S0
+    ##        pop_av[ic] = pop_tot[0][ic]
+        pop_av[ic] = pop_tot[0][ic] # or something else pop_av[ic] = pop_tot[0][ic]+pop_tot[2][ic] - pop_tot[1][ic]
+
     return pop_av
 
 def qe_extract_eigenvalues(filename,nel):
@@ -101,6 +115,7 @@ def qe_extract_info(filename, ex_st):
     alat = -1.0
     nel, norb, nat = -1, -1, -1
     nlines = len(A)
+    tot_ene = 0.0 # in case convergence not achieved in first attempt when index informations are extracted
 
     for a in A:
         s = a.split() 
