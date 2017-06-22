@@ -32,8 +32,8 @@ import scanPES
 params = {}
 params["nproc"] = 12              # the number of processors
 params["nspin"] = 2
-params["electronic_smearing"] = 0.001
-params["excitations"] = [ excitation(0,1,1,1) ] 
+params["electronic_smearing"] = 0.01
+params["excitations"] = [ excitation(0,1,0,1) ] #[ excitation(0,1,0,1), excitation(0,1,1,1), excitation(0,1,0,1) ]
 params["excitations_init"] = [1]
 params["HOMO"] = 0
 params["min_shift"] = 0

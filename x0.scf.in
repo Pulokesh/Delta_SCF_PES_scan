@@ -22,7 +22,7 @@
 /
 
 &ELECTRONS
-  electron_maxstep = 5,
+  electron_maxstep = 2,
   conv_thr = 1.D-5,
   mixing_beta = 0.45,
 /
@@ -77,7 +77,7 @@ OCCUPATIONS
 1 1 1 1 1 1 1 1 1 1
 1 1 1 1 1 1 1 1 1 1
 1 1 1 1 1 1 1 1 1 1
-1 1 1 0 1 0 0 0 0 0
+1 1 1 1 0 0 0 0 0 0
 0 0
 
 1 1 1 1 1 1 1 1 1 1

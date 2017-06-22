@@ -173,7 +173,7 @@ def write_qe_input(ex_st, cord, params,occ,occ_alp,occ_bet,restart_flag):
         if len(aa) >0 and aa[0] == "&ELECTRONS" and restart_flag==10:
             a = "&ELECTRONS \n"
         if len(aa) >0 and aa[0] == "electron_maxstep" and restart_flag>9:
-            a = " electron_maxstep = 2, \n "
+            a = " electron_maxstep = 5, \n "
 
         g.write(a)
     g.write("\n")
