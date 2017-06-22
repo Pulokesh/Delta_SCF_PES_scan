@@ -32,7 +32,7 @@ import scanPES
 params = {}
 params["nproc"] = 12              # the number of processors
 params["nspin"] = 2
-params["electronic_smearing"] = 0.01
+params["electronic_smearing"] = 0.001
 #-------------------------
 params["scf_itr"] = 2
 params["smear_scheme"] = 1 # 1 for [-1,0,1] for S1, 0 for [0] of S0
