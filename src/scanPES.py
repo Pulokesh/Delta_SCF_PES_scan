@@ -12,7 +12,7 @@
 ## \file scanPES.py
 # This module runs QE SCF calculation on a given grid of
 # internal coordinates and extracts energies corresponding to that
-# geometry and electronis state.
+# geometry and electronic state.
 
 import os
 import sys
@@ -29,7 +29,8 @@ from extract_qe import *
 
 def run_scan(params):
     ##
-    #
+    # This function calls qe_to_libra function from x_to_libra_qe module
+    # The function qe_to_libra then process the rest of functionality of PES scan
     nstates = len(params["excitations"])
     cf=open("traj.xyz","r")
     CRD=cf.readlines()
@@ -47,7 +48,11 @@ def run_scan(params):
 
 def scanPES(params):
     ##
-    #
+    # This function takes input parameters and coordinates, runs an initial QE calculation,
+    # extract and same additional system parameters, such as number of orbitals, number of atoms etc.
+    # Finlly calls run_scan function for scanning the PES
+    # Used in: run_qe.py
+
     nstates = len(params["excitations"])
     nspin = params["nspin"]
 

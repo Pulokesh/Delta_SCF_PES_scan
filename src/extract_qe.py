@@ -6,8 +6,8 @@
 #* the License, or (at your option) any later version.
 #* See the file LICENSE in the root directory of this distribution
 #* or <http://www.gnu.org/licenses/>.
-#*^M
-#*********************************************************************************/^M
+#*
+#*********************************************************************************
 
 import os
 import sys
@@ -21,17 +21,24 @@ elif sys.platform=="linux" or sys.platform=="linux2":
 from libra_py import *
 
 
-def fermi_pop(e,nel,spn,kT,el_st):  # <--- Now population scheme for all the MOs 
+def fermi_pop(e,nel,params,spin_index):
     ##
-    #
+    # This function is for generating Fermi populations of MOs.
+    
+    if spin_index ==-1: # For beta spin, use regular Fermi scheme
+        params["smear_scheme"] = 0
+
+    spn = params["nspin"]
+    kT = params["electronic_smearing"]
     etol = 0.0000000001
     pop_opt,pop_tot,pop_av = 1,[],[]
-    ##if el_st > 1:  # For S0
-    #if el_st > 0:  # For S0 and S1 the regular Fermi scheme is used
-    el_scheme = [0] # or =[-1,0,1] for other scheme
-    ##if el_st ==1:  # For S1
-    ##    el_scheme = [-1,0,1]
-    
+    if params["smear_scheme"]==0:
+        el_scheme = [0]
+    elif params["smear_scheme"]==1:
+        el_scheme = [-1,0,1]    
+    elif params["smear_scheme"]==2:
+        el_scheme = [-1,1,2]
+
     N = len(e)  # number of active space orbitals - at this point using full orbital space.
     for ib in xrange(N):
         pop_av.append(0.0)
@@ -52,20 +59,19 @@ def fermi_pop(e,nel,spn,kT,el_st):  # <--- Now population scheme for all the MOs
         bnds = order_bands(a)
         pop_fermi = populate_bands(Nel, degen, kT, etol, pop_opt, bnds)
         pop_tot.append([item[1] for item in pop_fermi]) #  pop_fermi[:10][1]
-    #   For S1
 
     for ic in xrange(N):
-    ##    if el_st ==1: # For S1
-    ##        pop_av[ic] = pop_tot[0][ic]+pop_tot[2][ic] - pop_tot[1][ic]
-    # For S0
-    #for ic in xrange(N):
-    ##    else:  # For S0
-    ##        pop_av[ic] = pop_tot[0][ic]
-        pop_av[ic] = pop_tot[0][ic] # or something else pop_av[ic] = pop_tot[0][ic]+pop_tot[2][ic] - pop_tot[1][ic]
+        if params["smear_scheme"] ==0: # For S0
+            pop_av[ic] = pop_tot[0][ic] # or something else pop_av[ic] = pop_tot[0][ic]+pop_tot[2][ic] - pop_tot[1][ic]
+        elif params["smear_scheme"] >0: # For S1 and S2, 1 and 2 respectively
+            pop_av[ic] = pop_tot[0][ic]+pop_tot[2][ic] - pop_tot[1][ic]
 
     return pop_av
 
+
 def qe_extract_eigenvalues(filename,nel):
+    ##
+    #
     f = open(filename,"r")
     a = f.readlines()
     na = len(a)
@@ -86,7 +92,8 @@ def qe_extract_eigenvalues(filename,nel):
 
 
 def check_convergence(filename):
-
+    ##
+    #
     f_out = open(filename, "r")
     A = f_out.readlines()
     f_out.close()
@@ -103,11 +110,11 @@ def check_convergence(filename):
 
 
 def qe_extract_info(filename, ex_st): 
-##
-# This function reads Quantum Espresso output and extracts 
-# the descriptive data.
-# \param[in] filename The name of the QE output file which we unpack
-#
+    ##
+    # This function reads Quantum Espresso output and extracts 
+    # the descriptive data.
+    # \param[in] filename The name of the QE output file which we unpack
+    #
     f_qe = open(filename, "r")
     A = f_qe.readlines()
     f_qe.close()
@@ -160,7 +167,7 @@ def qe_extract_info(filename, ex_st):
 
 def qe_extract(filename, ex_st, nspin):
     ##
-    #
+    # This function open output file and extract total energy
 
     # Read the descriptive info
     tot_ene, norb, nel, nat, alat = qe_extract_info(filename, ex_st)
