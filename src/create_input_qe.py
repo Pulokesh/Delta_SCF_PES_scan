@@ -151,8 +151,9 @@ def print_occupations(occ):
 
 
 def write_qe_input(ex_st, cord, params,occ,occ_alp,occ_bet,restart_flag):
-##
-
+    ##
+    # This function writes QE input files using coordinates, occupations bot integer and fractional
+    #
     HOMO = params["nel"]/2 - 1 # It must be integer, This is HOMO index
     excitation = params["excitations"][ex_st]
     qe_inp = "x%i.scf_wrk.in" % ex_st
@@ -168,12 +169,20 @@ def write_qe_input(ex_st, cord, params,occ,occ_alp,occ_bet,restart_flag):
         aa = a.split()
         if len(aa) >0 and aa[0] == "prefix":
             a = "  prefix = '%s',\n"%pfx
-        if len(aa) >0 and aa[0] == "&ELECTRONS" and restart_flag==11:
+        if len(aa) >0 and aa[0] == "&ELECTRONS" and restart_flag==11: # Second time after SCF break, 
+        # wavefunctions and potentials are initiated from previous calculation, 10
             a = "&ELECTRONS \n startingwfc = 'file', \n startingpot = 'file', \n"        
-        if len(aa) >0 and aa[0] == "&ELECTRONS" and restart_flag==10:
+        if len(aa) >0 and aa[0] == "&ELECTRONS" and restart_flag==10:  # First time after SCF breaks,
+        # No need to restart wavefunctions and potentials from last SCF calculation
             a = "&ELECTRONS \n"
+<<<<<<< HEAD
         if len(aa) >0 and aa[0] == "electron_maxstep" and restart_flag>9:
             a = " electron_maxstep = 2, \n "
+=======
+        if len(aa) >0 and aa[0] == "electron_maxstep" and restart_flag>9: # For both of the the new SCF iterations
+        # steps will be very small, 2. It can also be varied.
+            a = " electron_maxstep = %i, \n "%params["scf_itr"]
+>>>>>>> devel
     
 
         g.write(a)
@@ -186,11 +195,6 @@ def write_qe_input(ex_st, cord, params,occ,occ_alp,occ_bet,restart_flag):
         g.write("%s"  %k )
     g.write("\n")
 
-    #################################
-    #  At this point ex_st = 0 for spin-unrestricted calculation with 
-    # QE default gaussian smearing calculation - no OCCUPATIONS card required for ex_st = 0
-    ##if ex_st >0:
-    ################################
     # Write occupation
     g.write(""+'\n')
     g.write("OCCUPATIONS"+'\n')

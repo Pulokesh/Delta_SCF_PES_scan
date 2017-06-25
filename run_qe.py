@@ -25,19 +25,29 @@ elif user==1:
 os.environ["src_path"] = libra_qe_int_path   # Path to the source code
 sys.path.insert(1,os.environ["src_path"])    # Path to the source code
 
-#import main  This will later be attached to main LIBRA-X
+#This will later be included to main LIBRA-X
 import scanPES
 
 ########## Setup all manual parameters here ####################
 params = {}
 params["nproc"] = 12              # the number of processors
 params["nspin"] = 2
+<<<<<<< HEAD
 params["electronic_smearing"] = 0.001
 #-------------------------
 params["scf_itr"] = 2
 params["smear_scheme"] = 1 # 1 for [-1,0,1] for S1, 0 for [0] of S0
 #-------------------------
 params["excitations"] = [ excitation(0,1,1,1) ] #[ excitation(0,1,0,1), excitation(0,1,1,1), excitation(0,1,0,1) ]
+=======
+params["electronic_smearing"] = 0.01  # Electronic smearing used in Fermi distribution
+#-------------------------
+params["scf_itr"] = 2   # Number of SCF iteration when convergence not achieved after 
+                        # QE input specified scf iterations, 2 as well.
+params["smear_scheme"] = 0 # 2 for S2 with  [-1,1,2], 1 for S1 with [-1,0,1], and 0 for S0 with [0]
+#-------------------------
+params["excitations"] = [ excitation(0,1,0,1) ] #[ excitation(0,1,0,1), excitation(0,1,1,1), excitation(0,1,0,1) ]
+>>>>>>> devel
 params["excitations_init"] = [1]
 params["HOMO"] = 0
 params["min_shift"] = 0
@@ -50,11 +60,6 @@ for i in range(0,len(params["excitations"])):
 cwd = os.getcwd()
 params["pes_en"] = cwd+"/pes_en/"
 params["print_pes_en"] = 1
-params["run_option"]=-1 # 1 for Delta-SCF-NA-MD; -1 for PES scan
-#if params["run_option"]==-1: 
-#    scanPES.scanPES(params)  # run actual calculations
-#else:
-#    main.main(params)
 
 #################################
 #      Run actual calculation   #

@@ -36,7 +36,11 @@ def exe_espresso(i):
     os.system("srun pw.x < %s > %s" % (inp,out))
 
 def qe_to_libra(params, cord, suff):
-    ## 
+    ##
+    # This function takes input parameters and coordinates and run QE scf calculation,
+    # Check convergence, exctract energies if convergence is achieved, invoke Fermi population scheme if
+    # SCF is not converged.
+
     nstates = len(params["excitations"])
     E2 = MATRIX(nstates,nstates)
     nspin = params["nspin"]
@@ -58,18 +62,27 @@ def qe_to_libra(params, cord, suff):
                 tot_ene = qe_extract("x%i.scf.out" % ex_st, ex_st, nspin)
             else:
                 if coount==1:
-                    restart_flag = 10
+                    restart_flag = 10  # For the first time after SCF break
                 else:
-                    restart_flag = 11
+                    restart_flag = 11  # Second iteration after SCF break
                 if params["nspin"] == 2: # Spin-polar
                     en_alp = qe_extract_eigenvalues("x%i.save/K00001/eigenval1.xml"%ex_st,nel)
                     en_bet = qe_extract_eigenvalues("x%i.save/K00001/eigenval2.xml"%ex_st,nel)
+<<<<<<< HEAD
                     occ_alp = fermi_pop(en_alp,nel,params) # 1 for alpha
                     occ_bet = fermi_pop(en_bet,nel,params) # -1 for beta spin
 
                 if params["nspin"] == 1: # non-Spin-polar
                     en_alp = qe_extract_eigenvalues("x%i.save/K00001/eigenval.xml"%ex_st,nel)
                     occ = fermi_pop(en_alp,nel,params)
+=======
+                    occ_alp = fermi_pop(en_alp,nel,params,1) # 1 for alpha spin index
+                    occ_bet = fermi_pop(en_bet,nel,params,-1) # -1 for beta spin index
+
+                if params["nspin"] == 1: # non-Spin-polar
+                    en_alp = qe_extract_eigenvalues("x%i.save/K00001/eigenval.xml"%ex_st,nel)
+                    occ = fermi_pop(en_alp,nel,params,1)
+>>>>>>> devel
         E2.set(ex_st, ex_st, tot_ene)
     #---------------------------------------------------------------
     #               Print total energies                           #
