@@ -32,14 +32,6 @@ import scanPES
 params = {}
 params["nproc"] = 12              # the number of processors
 params["nspin"] = 2
-<<<<<<< HEAD
-params["electronic_smearing"] = 0.001
-#-------------------------
-params["scf_itr"] = 2
-params["smear_scheme"] = 1 # 1 for [-1,0,1] for S1, 0 for [0] of S0
-#-------------------------
-params["excitations"] = [ excitation(0,1,1,1) ] #[ excitation(0,1,0,1), excitation(0,1,1,1), excitation(0,1,0,1) ]
-=======
 params["electronic_smearing"] = 0.01  # Electronic smearing used in Fermi distribution
 #-------------------------
 params["scf_itr"] = 2   # Number of SCF iteration when convergence not achieved after 
@@ -47,7 +39,6 @@ params["scf_itr"] = 2   # Number of SCF iteration when convergence not achieved 
 params["smear_scheme"] = 0 # 2 for S2 with  [-1,1,2], 1 for S1 with [-1,0,1], and 0 for S0 with [0]
 #-------------------------
 params["excitations"] = [ excitation(0,1,0,1) ] #[ excitation(0,1,0,1), excitation(0,1,1,1), excitation(0,1,0,1) ]
->>>>>>> devel
 params["excitations_init"] = [1]
 params["HOMO"] = 0
 params["min_shift"] = 0

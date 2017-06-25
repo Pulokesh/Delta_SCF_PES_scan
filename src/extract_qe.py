@@ -21,27 +21,6 @@ elif sys.platform=="linux" or sys.platform=="linux2":
 from libra_py import *
 
 
-<<<<<<< HEAD
-#def fermi_pop(e,nel,spn,kT,frmi_indx):  # 0 for [0], 1 for [-1,0,1]<--- Now population scheme for all the MOs
-def fermi_pop(e,nel,params):  # 0 for [0], 1 for [-1,0,1]<--- Now population scheme for all the MOs
-    ##
-    #
-    spn = params["nspin"]
-    kT = params["electronic_smearing"]
-    frmi_indx = params["smear_scheme"]  # 0 for [0], 1 for [-1,0,1]
-    etol = 0.0000000001
-    pop_opt,pop_tot,pop_av = 1,[],[]
-    ##if el_st > 1:  # For S0
-    #if el_st > 0:  # For S0 and S1 the regular Fermi scheme is used
-    if frmi_indx==0:
-        el_scheme = [0]
-    elif frmi_indx==1:
-        el_scheme = [-1,0,1]
-    
-    ##if el_st ==1:  # For S1
-    ##    el_scheme = [-1,0,1]
-    
-=======
 def fermi_pop(e,nel,params,spin_index):
     ##
     # This function is for generating Fermi populations of MOs.
@@ -60,7 +39,6 @@ def fermi_pop(e,nel,params,spin_index):
     elif params["smear_scheme"]==2:
         el_scheme = [-1,1,2]
 
->>>>>>> devel
     N = len(e)  # number of active space orbitals - at this point using full orbital space.
     for ib in xrange(N):
         pop_av.append(0.0)
@@ -83,15 +61,9 @@ def fermi_pop(e,nel,params,spin_index):
         pop_tot.append([item[1] for item in pop_fermi]) #  pop_fermi[:10][1]
 
     for ic in xrange(N):
-<<<<<<< HEAD
-        if frmi_indx ==0: # For S0
-            pop_av[ic] = pop_tot[0][ic] # or something else pop_av[ic] = pop_tot[0][ic]+pop_tot[2][ic] - pop_tot[1][ic]
-        elif frmi_indx ==1: # For S1
-=======
         if params["smear_scheme"] ==0: # For S0
             pop_av[ic] = pop_tot[0][ic] # or something else pop_av[ic] = pop_tot[0][ic]+pop_tot[2][ic] - pop_tot[1][ic]
         elif params["smear_scheme"] >0: # For S1 and S2, 1 and 2 respectively
->>>>>>> devel
             pop_av[ic] = pop_tot[0][ic]+pop_tot[2][ic] - pop_tot[1][ic]
 
     return pop_av
