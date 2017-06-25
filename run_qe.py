@@ -19,7 +19,7 @@ if user==0:
 elif user==1:
     # For Ekadashi
     libra_bin_path = "/projects/academic/alexeyak/ekadashi/libracode-dev/libracode-code/_build/src"
-    libra_qe_int_path = "/gpfs/scratch/ekadashi/Libra-X/Delta_SCF_PES_scan/scheme_gen/src"
+    libra_qe_int_path = "/projects/academic/alexeyak/ekadashi/Delta_SCF_PES_scan/src"
 
 
 os.environ["src_path"] = libra_qe_int_path   # Path to the source code
