@@ -24,19 +24,21 @@ from libra_py import *
 def fermi_pop(e,nel,params,spin_index):
     ##
     # This function is for generating Fermi populations of MOs.
-    
-    if spin_index ==-1: # For beta spin, use regular Fermi scheme
-        params["smear_scheme"] = 0
+
+    if spin_index ==1: # For beta spin, use regular Fermi scheme
+        scheme_smear=params["smear_scheme"] 
+    elif spin_index ==-1: # For beta spin, use regular Fermi scheme
+        scheme_smear = 0
 
     spn = params["nspin"]
     kT = params["electronic_smearing"]
     etol = 0.0000000001
     pop_opt,pop_tot,pop_av = 1,[],[]
-    if params["smear_scheme"]==0:
+    if scheme_smear==0:
         el_scheme = [0]
-    elif params["smear_scheme"]==1:
+    elif scheme_smear==1:
         el_scheme = [-1,0,1]    
-    elif params["smear_scheme"]==2:
+    elif scheme_smear==2:
         el_scheme = [-1,1,2]
 
     N = len(e)  # number of active space orbitals - at this point using full orbital space.
@@ -61,9 +63,9 @@ def fermi_pop(e,nel,params,spin_index):
         pop_tot.append([item[1] for item in pop_fermi]) #  pop_fermi[:10][1]
 
     for ic in xrange(N):
-        if params["smear_scheme"] ==0: # For S0
+        if scheme_smear ==0: # For S0
             pop_av[ic] = pop_tot[0][ic] # or something else pop_av[ic] = pop_tot[0][ic]+pop_tot[2][ic] - pop_tot[1][ic]
-        elif params["smear_scheme"] >0: # For S1 and S2, 1 and 2 respectively
+        elif scheme_smear >0: # For S1 and S2, 1 and 2 respectively
             pop_av[ic] = pop_tot[0][ic]+pop_tot[2][ic] - pop_tot[1][ic]
 
     return pop_av
