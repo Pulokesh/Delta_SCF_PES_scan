@@ -68,6 +68,20 @@ def fermi_pop(e,nel,params,spin_index):
         elif scheme_smear >0: # For S1 and S2, 1 and 2 respectively
             pop_av[ic] = pop_tot[0][ic]+pop_tot[2][ic] - pop_tot[1][ic]
 
+    # Comment-out these following two lines - required for half-half or net single excitations
+    #a1 = pop_av[33]  # 33 is the HOMO index of Azobenzene, 34 is the LUMO
+    #a2 = pop_av[34]
+
+    #Overall single excitation with scheme_smear= 0 for S1 state
+    #pop_av[33] = a2+a1/2.0
+    #pop_av[34] = a1/2.0
+
+    #Overall single excitation with scheme_smear= 1 for S1 state
+    #pop_av[33] = a1+a2/2.0
+    #pop_av[34] = a2/2.0
+
+
+
     return pop_av
 
 
